@@ -1,25 +1,34 @@
 import React from 'react';
-import { LocationList } from './components/location_list/LocationList';
-import { ParameterList } from './components/parameters_list/ParameterList';
-import { GameData } from './components/GameData';
-import { EndConditionsList } from './components/end_conditions_list/EndConditionsList';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import { GameEditor } from './pages/GameEditor'
+
+let locations = new Array(5).fill('').map((v, i) => ({
+  id: i + 1,
+  gameId: 0,
+  name: `Location №${i + 1}`,
+  description: `Location №${i + 1}`,
+  finish: false,
+  actions: {}
+}));
+
+let Game = {
+  properties: {
+    id: 0,
+    name: 'Game name',
+    description: 'Game description',
+    startLocation: null
+  },
+  locations: locations
+}
 
 function App() {
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-3">
-          <LocationList />
-        </div>
-        <div className="col-md-3">
-          <ParameterList />
-        </div>
-        <div className="col-md-6">
-          <GameData />
-          <EndConditionsList />
-        </div>
-      </div>
-
+      <BrowserRouter>
+        <Switch>
+          <Route path={'/'} exact component={GameEditor} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
